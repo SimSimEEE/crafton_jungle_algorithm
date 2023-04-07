@@ -1,6 +1,4 @@
 import sys
 input = sys.stdin.readline
-star = ""
-for _ in range(int(input())):
-    star += "*"
-    print(star)
+for i in range(int(input())):
+    print('*'*(i+1))
