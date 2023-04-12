@@ -10,6 +10,7 @@ for i in range(N):
     if not hunted_animal[i]:
         for x in Mx:
             if Nxy[i][1]+Nxy[i][0] <= L + x and Nxy[i][1]-Nxy[i][0] <= L - x:
-                hunted_animal[i] = 1
+                hunted_animal[i] = True
+                break
 
-print(hunted_animal.count(1))
+print(hunted_animal.count(True))
