@@ -1,9 +1,12 @@
 import sys
 input = sys.stdin.readline
 N, r, c = map(int, input().split())
-def sol(N, r, c):
 
+def Z(N, r, c):
+    N //= 2
     if N == 0:
         return 0
-    return 2*(r % 2)+(c % 2) + 4*sol(N-1, int(r/2), int(c/2))
-print(sol(N, r, c))
+    xy = 2*(r//N) + c//N
+    return N*N * xy + Z(N, r-N*(r//N), c-N*(c//N))
+
+print(Z(2**N, r, c))
