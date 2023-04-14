@@ -1,16 +1,20 @@
 import sys
 input = sys.stdin.readline
-M,N,L = map(int,input().split())
-Mx = list(map(int,input().split()))
-Nxy = [list(map(int,input().split())) for _ in range(N)]
+M, N, L = map(int, input().split())
+shoot = sorted(list(map(int, input().split())))
+animal = [list(map(int, input().split())) for _ in range(N)]
 
-hunted_animal = [False]*N
+cnt = 0
+for animal_x, animal_y in animal:
+    start = 0
+    end = M - 1
+    while start < end:
+        mid = (start + end) // 2
+        if animal_x > shoot[mid]:
+            start = mid + 1
+        else:
+            end = mid
+    if abs(animal_x-shoot[end]) <= L - animal_y:
+            cnt += 1
 
-for i in range(N):
-    if not hunted_animal[i]:
-        for x in Mx:
-            if Nxy[i][1]+Nxy[i][0] <= L + x and Nxy[i][1]-Nxy[i][0] <= L - x:
-                hunted_animal[i] = True
-                break
-
-print(hunted_animal.count(True))
+print(cnt)
