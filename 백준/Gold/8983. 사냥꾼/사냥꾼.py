@@ -14,7 +14,7 @@ for animal_x, animal_y in animal:
             start = mid + 1
         else:
             end = mid
-    if abs(animal_x-shoot[end]) <= L - animal_y:
-            cnt += 1
+    if abs(animal_x-shoot[(start + end)//2]) <= L - animal_y:
+        cnt += 1
 
 print(cnt)
