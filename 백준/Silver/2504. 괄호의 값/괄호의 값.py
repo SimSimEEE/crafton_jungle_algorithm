@@ -1,37 +1,24 @@
 import sys
 input = sys.stdin.readline
 
-def sol(PS):
-    result = 0
-    median = 1
-    stack = []
-    for i in range(len(PS)):
-        ps = PS[i]
-        if ps == '(' or ps == '[':
-            median *= 2 + ord(ps) % 2
-            stack.append(ps)
-        else:
-            if not stack:
-                return 0
-            if ps == ')' and stack[-1] == '(':
-                if PS[i-1] == '(':
-                    result += median
-                    median //= 2
-                    stack.pop()
-                else:
-                    median //= 2
-                    stack.pop()
-            elif ps == ']' and stack[-1] == '[':
-                if PS[i-1] == '[':
-                    result += median
-                    median //= 3
-                    stack.pop()
-                else:
-                    median //= 3
-                    stack.pop()
+s = list(input().rstrip())[::-1]
 
-    if stack:
-        return 0
-    return result
+def cal(start):
+    r = 0
+    while s:
+        a = s.pop()
+        if a == "(" or a == "[":
+            r += cal(a)
+        elif start == "(" and a == ")":
+            return 2 * max(1,r)
+        elif start == "[" and a == "]":
+            return 3 * max(1,r)
+    
+    # 리스트가 비었는데 최종 return 하지 못했다는 것은 괄호에 문제가 있음을 의미
+    print(0)
+    sys.exit()
 
-print(sol(input().rstrip()))
+ans = 0    
+while s:
+    ans += cal(s.pop())
+print(ans)
