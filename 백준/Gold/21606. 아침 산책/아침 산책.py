@@ -1,14 +1,14 @@
 import sys
 input = sys.stdin.readline
 
-def DFS(V):
-    global flag
-    global result
-    flag = flag | 1 << V
+def DFS(V,start):
+    global flag, result
+    flag[start] = flag[start] | 1 << V
+    flag[V] = flag[V] | 1 << start
     for i in tree[V]:
-        if flag & 1 << i == 0:
+        if flag[start] & 1 << i == 0:
             if side[i-1] == '0':
-                DFS(i)
+                DFS(i,start)
             else:
                 result+=1
 
@@ -22,9 +22,9 @@ for _ in range(V-1):
     tree[v].append(u)
 
 result = 0
+flag = [0]*(V+1)
 for i in range(1, V+1):
-    flag = 0
     if side[i-1] == '1':
-        DFS(i)
+        DFS(i,i)
 
 print(result)
