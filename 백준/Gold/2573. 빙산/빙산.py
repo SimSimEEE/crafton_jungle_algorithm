@@ -1,75 +1,54 @@
 import sys
-sys.setrecursionlimit(10**5)
-read = sys.stdin.readline
+from collections import deque
 
-def melt(x, y):
-    cnt = 0 
+def bfs(start, visited):
+    queue = deque([start])
+    visited[start[0]][start[1]] = True
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
+    while queue:
+        x, y = queue.popleft()
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < n and 0 <= ny < m and not visited[nx][ny]:
+                if iceberg[nx][ny] > 0:
+                    visited[nx][ny] = True
+                    queue.append((nx, ny))
 
-        if 0 <= nx < N and 0 <= ny < M:
-            if arr[nx][ny] == 0:
-                cnt += 1
+def melt():
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    melts = []
+    for i in range(n):
+        for j in range(m):
+            if iceberg[i][j] > 0:
+                cnt = 0
+                for dx, dy in directions:
+                    nx, ny = i + dx, j + dy
+                    if 0 <= nx < n and 0 <= ny < m and iceberg[nx][ny] == 0:
+                        cnt += 1
+                melts.append((i, j, cnt))
 
-    if cnt != 0:
-        return x, y, cnt
-    else:
-        return None
+    for x, y, cnt in melts:
+        iceberg[x][y] = max(iceberg[x][y] - cnt, 0)
 
-def dfs(x, y):
-    visited[x][y] = True
+if __name__ == '__main__':
+    n, m = map(int, sys.stdin.readline().split())
+    iceberg = [list(map(int, sys.stdin.readline().split())) for _ in range(n)]
+    years = 0
 
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-
-        if 0 <= nx < N and 0 <= ny < M:
-            if not visited[nx][ny] and arr[nx][ny] != 0:
-                dfs(nx, ny)
-
-N, M = map(int, read().split())
-arr = [list(map(int, read().split())) for _ in range(N)]
-
-dx = [0, 0, 1, -1]
-dy = [1, -1, 0, 0]
-
-answer = 0
-
-while True:
-    answer += 1
-
-    reduce = []
-    for x in range(1, N):
-        for y in range(1, M):
-            if arr[x][y] != 0:
-                h = melt(x, y)
-
-                if h is not None:
-                    reduce.append(h)
-
-    for x, y, h in reduce:
-        arr[x][y] = arr[x][y] - h if arr[x][y] - h > 0 else 0
-
-    cnt = 0
-    visited = [[False] * M for _ in range(N)]
-
-    for x in range(1, N):
-        for y in range(1, M):
-            if arr[x][y] != 0 and not visited[x][y]:
-                cnt += 1
-
-                if cnt == 2:
-                    break
-
-                dfs(x, y)
-
-    if cnt > 1: 
-        break
-
-    if sum(map(sum, arr[1:-1])) == 0:
-        answer = 0
-        break
-
-print(answer)
+    while True:
+        cnt = 0
+        visited = [[False] * m for _ in range(n)]
+        for i in range(n):
+            for j in range(m):
+                if iceberg[i][j] > 0 and not visited[i][j]:
+                    bfs((i, j), visited)
+                    cnt += 1
+        if cnt > 1:
+            print(years)
+            break
+        if cnt == 0:
+            print(0)
+            break
+        melt()
+        years += 1
