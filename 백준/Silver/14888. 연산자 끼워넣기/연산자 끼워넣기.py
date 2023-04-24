@@ -1,48 +1,36 @@
 import sys
-input = sys.stdin.readline
 
-def DFS(cnt, flag):
-    if cnt == N-1:
-        global max_result,min_result
-        tmp = A[0]
-        for i in range(N-1):
-            if result[i] == 0:
-                tmp += A[i+1]
-            elif result[i] == 1:
-                tmp -= A[i+1]
-            elif result[i] == 2:
-                tmp *= A[i+1]
-            else:
-                if tmp > 0:
-                    tmp //= A[i+1]
-                else:
-                    tmp = -((-tmp) // A[i+1])
+def dfs(cnt, flag, tmp):
+    global max_result, min_result
+    if cnt == n - 1:
         max_result = max(max_result, tmp)
         min_result = min(min_result, tmp)
-        return
     else:
-        for i in range(N-1):
-            if flag & 1 << i != 0:
+        for i in range(n - 1):
+            if flag & (1 << i):
                 continue
-            result[cnt] = op_list[i]
-            DFS(cnt+1, flag | 1 << i)
+            new_tmp = tmp
+            if op_list[i] == 0:
+                new_tmp += a[cnt + 1]
+            elif op_list[i] == 1:
+                new_tmp -= a[cnt + 1]
+            elif op_list[i] == 2:
+                new_tmp *= a[cnt + 1]
+            else:
+                if new_tmp > 0:
+                    new_tmp //= a[cnt + 1]
+                else:
+                    new_tmp = -((-new_tmp) // a[cnt + 1])
+            dfs(cnt + 1, flag | (1 << i), new_tmp)
 
-N = int(input())
-A = list(map(int, input().split()))
+n = int(input())
+a = list(map(int, input().split()))
+op = list(map(int, input().split()))
 
-operator = list(map(int, input().split()))
-
-flag = 0
-op_list = []
-result = [0]*(N-1)
+op_list = [i for i in range(4) for _ in range(op[i])]
 max_result = -sys.maxsize
 min_result = sys.maxsize
-
-for i in range(4):
-    for j in range(operator[i]):
-        op_list.append(i)
-
-DFS(0,0)
+dfs(0, 0, a[0])
 
 print(max_result)
 print(min_result)
