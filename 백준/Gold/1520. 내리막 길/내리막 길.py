@@ -9,19 +9,18 @@ visited = list([-1]*N for _ in range(M))
 drow = [1,-1,0,0]
 dcol = [0,0,1,-1]
 
-def dfs(row,col):
-    if row == M-1 and col == N-1:
+def dfs(row, col):
+    if row == M -1 and col == N - 1:
         return 1
-    
     if visited[row][col] != -1:
         return visited[row][col]
     
-    cnt = 0
+    visited[row][col] = 0
     for i in range(4):
         nrow = row + drow[i]
         ncol = col + dcol[i]
-        if 0 <= nrow < M and 0 <= ncol < N and graph[row][col] > graph[nrow][ncol]:
-            cnt += dfs(nrow,ncol)
-    visited[row][col] = cnt
+        if 0 <= nrow < M and 0 <= ncol < N and graph[nrow][ncol] < graph[row][col]:
+            visited[row][col] += dfs(nrow,ncol)
     return visited[row][col]
+
 print(dfs(0,0))
