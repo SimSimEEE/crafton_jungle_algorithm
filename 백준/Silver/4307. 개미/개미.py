@@ -1,3 +1,5 @@
+import sys
+input = sys.stdin.readline
 for _ in range(int(input())):
     l, n = map(int, input().split())
     ants = list(int(input()) for _ in range(n))
