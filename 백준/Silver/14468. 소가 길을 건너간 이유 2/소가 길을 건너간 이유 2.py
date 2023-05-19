@@ -1,11 +1,12 @@
-cows = list(input())
-cnt = 0
+import sys
 
-for start in range(51):
-    for end in range(start+1,52):
-        if cows[start] == cows[end]:
-            cows_between = cows[start:end+1]
-            for cow in cows_between:
-                if cows_between.count(cow) == 1:
-                    cnt += 1
-print(cnt//2)
+cow=list(sys.stdin.readline().rstrip())
+alpha=[]
+res=0
+for i in cow:
+	if i in alpha:
+		res+=len(alpha)-alpha.index(i)-1
+		alpha.remove(i)
+	else:
+		alpha.append(i)
+print(res)
