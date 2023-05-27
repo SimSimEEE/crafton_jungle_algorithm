@@ -13,12 +13,13 @@ def dfs(row, col, dir):
     if row == N-1 and col == N-1:
         cnt += 1
         return
-    if (dir == 0 or dir == 1) and col + 1 < N and graph[row][col + 1] == 0:
+    
+    if (dir == 0 or dir == 2) and col + 1 < N and graph[row][col + 1] == 0:
         dfs(row, col + 1, 0)
     if (dir == 1 or dir == 2) and row + 1 < N and graph[row + 1][col] == 0:
-        dfs(row + 1, col, 2)
+        dfs(row + 1, col, 1)
     if row < N-1 and col < N-1 and graph[row+1][col] == 0 and graph[row][col + 1] == 0 and graph[row+1][col+1] == 0:
-        dfs(row + 1, col + 1, 1)
+        dfs(row + 1, col + 1, 2)
         
 N = int(input())
 graph = [list(map(int, input().split())) for _ in range(N)]
