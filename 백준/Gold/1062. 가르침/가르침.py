@@ -1,5 +1,23 @@
 import re
-from itertools import combinations
+
+def backtrack(count, start_idx):
+    global max_count
+    if count == k:
+        temp_count = 0
+        for word in filtered_words:
+            for letter in word:
+                if not visited[ord(letter) - ord('a')]:
+                    break
+            else:
+                temp_count += 1
+        max_count = max(max_count, temp_count)
+        return
+
+    for i in range(start_idx, 26):
+        if not visited[i]:
+            visited[i] = True
+            backtrack(count + 1, i)
+            visited[i] = False
 
 n, k = map(int, input().split())
 alphabet_set = set()
@@ -20,21 +38,19 @@ else:
         else:
             alphabet_set |= set(word)
             filtered_words.append(word)
+
     if len(alphabet_set) <= k:
         print(n)
-        
     else:
-        nCr = combinations(alphabet_set, k)
-        max_count = 0
+        visited = [False] * 26
+        visited[ord('a') - ord('a')] = True
+        visited[ord('c') - ord('a')] = True
+        visited[ord('t') - ord('a')] = True
+        visited[ord('n') - ord('a')] = True
+        visited[ord('i') - ord('a')] = True
 
-        for combination in nCr:
-            count = 0
-            for word in filtered_words:
-                for letter in combination:
-                    word = word.replace(letter, "")
-                if not word:
-                    count += 1
-            max_count = max(max_count, count)
+        max_count = 0
+        backtrack(0, 0)
 
         result += max_count
         print(result)
