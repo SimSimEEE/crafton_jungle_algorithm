@@ -5,12 +5,11 @@ function solution(name, yearning, photo) {
         nameAndYearning[name] = yearning[index]
     });
     photo.forEach((array, index)=>{
-        if(!answer[index]){
-            answer[index] = 0;
-        }
+        let tmp = 0;
         array.forEach((people)=>{
-           answer[index] += (nameAndYearning[people] || 0); 
+           tmp += (nameAndYearning[people] || 0); 
         });
+        answer.push(tmp);
     });
     return answer;
 }
