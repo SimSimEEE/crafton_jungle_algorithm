@@ -1,9 +1,9 @@
 function solution(cards1, cards2, goal) {
-    for(i in goal){
-        if(cards1[0] === goal[i]){
+    for(g of goal){
+        if(cards1[0] === g){
             cards1.shift();
         }
-        else if(cards2[0] === goal[i]){
+        else if(cards2[0] === g){
             cards2.shift();
         }
         else{
