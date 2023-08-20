@@ -11,6 +11,9 @@ function solution(n, works) {
             }
         if(works[0]!==0)
             works[0]--;
+        else{
+            break;
+        }
     }
     works.forEach((w)=>{
        answer += w**2; 
