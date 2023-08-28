@@ -1,15 +1,10 @@
 function solution(s, skip, index) {
     var answer = '';
     const dictionary = [];
-    for(let i = 0; i < 26; i++){
-        const alpa = String.fromCharCode(i + 97);
-        if(!skip.includes(alpa)){
-            dictionary.push(alpa);
-        }
-    }
+    let alphabet = [...'abcdefghijklmnopqrstuvwxyz'].filter(v => ![...skip].includes(v));
     [...s].forEach((c)=>{
-        let i = (dictionary.indexOf(c) + index) % dictionary.length;
-        answer += dictionary[i];
+        let i = (alphabet.indexOf(c) + index) % alphabet.length;
+        answer += alphabet[i];
     });
     return answer;
 }
