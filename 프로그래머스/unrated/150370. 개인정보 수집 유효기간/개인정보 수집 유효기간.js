@@ -1,26 +1,37 @@
-function days(year, month, day){
-    return Number(year)*12*28 + Number(month)*28 + Number(day);
+function days(year, month, day) {
+    return Number(year) * 12 * 28 + Number(month) * 28 + Number(day);
+}
+
+function extractDayInfo(dayString) {
+    const parts = dayString.split(".");
+    const day = parts.pop();
+    parts.push(...day.split(" "));
+    return {
+        year: parts[0],
+        month: parts[1],
+        day: parts[2],
+        term: parts[3]
+    };
 }
 
 function solution(today, terms, privacies) {
-    var answer = [];
-    const termMap = [];
-    terms.forEach((entry)=>{
-        const arrayEntry = entry.split(" ");
-        termMap[arrayEntry[0]] = Number(arrayEntry[1]);
+    const termMap = {};
+    terms.forEach((entry) => {
+        const [term, value] = entry.split(" ");
+        termMap[term] = Number(value);
     });
-    const ArrayToday = today.split(".");
-    const convertToday = days(ArrayToday[0], ArrayToday[1], ArrayToday[2]);
-    privacies.forEach((entry, index)=>{
-        const convertDay = entry.split(".");
-        const tmp = convertDay.pop();
-        convertDay.push(...tmp.split(" "));
-        let contDay = days(convertDay[0], convertDay[1], convertDay[2]);
-        contDay += termMap[convertDay[3]]*28;
-        if(contDay <= convertToday){
+
+    const convertedToday = days(...today.split("."));
+    const answer = [];
+
+    privacies.forEach((entry, index) => {
+        const { year, month, day, term } = extractDayInfo(entry);
+        let dayValue = days(year, month, day) + termMap[term] * 28;
+        
+        if (dayValue <= convertedToday) {
             answer.push(index + 1);
         }
     });
-    
+
     return answer;
 }
