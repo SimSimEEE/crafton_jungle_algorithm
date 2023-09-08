@@ -1,6 +1,6 @@
 def solution(routes):
     answer = 0
-    routes.sort(key=lambda x: (x[1], x[0]))
+    routes.sort(key=lambda x: (x[1]))
     camera_position = -30001
     for route in routes:
         start, end = route
