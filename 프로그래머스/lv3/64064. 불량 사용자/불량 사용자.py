@@ -23,4 +23,5 @@ def solution(user_id, banned_id):
     for combination in product(*banned_idArr):
         if len(set(combination)) == len(combination):
             unique_combinations.add(tuple(sorted(combination)))
+            
     return len(unique_combinations)
