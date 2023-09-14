@@ -1,9 +1,5 @@
 def rotation(arr, query):
-    x1, y1, x2, y2 = query
-    x1 -= 1
-    y1 -= 1
-    x2 -= 1
-    y2 -= 1
+    x1, y1, x2, y2 = query[0]-1, query[1]-1, query[2]-1, query[3]-1
     prev = arr[x1][y1]
     min_val = prev
 
