@@ -6,9 +6,7 @@ def solution(storey):
         if tmp > 5:
             storey += 1
             tmp = 10 - tmp
-        elif tmp < 5:
-            tmp = tmp
-        else:
+        elif tmp == 5:
             if storey%10 >= 5:
                 storey+=1
         answer += tmp
