@@ -1,16 +1,14 @@
 import math
+def calculate_gcd(arr):
+    result = 0
+    for num in arr:
+        result = math.gcd(result, num)
+    return result
 def solution(arrayA, arrayB):
-    gcdA, gcdB = 0, 0
-    for A in arrayA:
-        gcdA = math.gcd(gcdA, A)
-    for B in arrayB:
-        gcdB = math.gcd(gcdB, B)
-    for B in arrayB:
-        if B%gcdA == 0:
-            gcdA = 0
-            break
-    for A in arrayA:
-        if A%gcdB == 0:
-            gcdB = 0
-            break
+    gcdA = calculate_gcd(arrayA)
+    gcdB = calculate_gcd(arrayB)
+    if any(B % gcdA == 0 for B in arrayB):
+        gcdA = 0
+    if any(A % gcdB == 0 for A in arrayA):
+        gcdB = 0
     return max(gcdA, gcdB)
