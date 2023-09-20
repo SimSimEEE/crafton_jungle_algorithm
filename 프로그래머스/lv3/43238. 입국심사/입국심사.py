@@ -1,7 +1,7 @@
 def solution(n, times):
     answer = 0
     times.sort()
-    low = 1
+    low = times[0]
     high = times[-1] * n
     while low <= high:
         mid = (low + high) // 2
