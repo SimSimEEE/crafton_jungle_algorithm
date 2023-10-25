@@ -34,7 +34,4 @@ def find_max_bishops(bishop_list):
     recursion(0, [])
     return max_bishops
 
-max_white_bishops = find_max_bishops(white)
-max_black_bishops = find_max_bishops(black)
-answer = max_white_bishops + max_black_bishops
-print(answer)
+print(find_max_bishops(white) + find_max_bishops(black))
