@@ -1,3 +1,6 @@
+import sys
+input = sys.stdin.readline
+
 def time_to_min(time_str):
     hours, minutes = map(int, time_str.split(':'))
     return hours * 60 + minutes
