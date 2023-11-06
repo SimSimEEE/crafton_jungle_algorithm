@@ -3,13 +3,7 @@ import re
 def backtrack(count, start_idx):
     global max_count
     if count == k:
-        temp_count = 0
-        for word in filtered_words:
-            for letter in word:
-                if not visited[ord(letter) - ord('a')]:
-                    break
-            else:
-                temp_count += 1
+        temp_count = count_words(filtered_words, visited)
         max_count = max(max_count, temp_count)
         return
 
@@ -18,6 +12,16 @@ def backtrack(count, start_idx):
             visited[i] = True
             backtrack(count + 1, i)
             visited[i] = False
+
+def count_words(words, visited):
+    temp_count = 0
+    for word in words:
+        for letter in word:
+            if not visited[ord(letter) - ord('a')]:
+                break
+        else:
+            temp_count += 1
+    return temp_count
 
 n, k = map(int, input().split())
 alphabet_set = set()
